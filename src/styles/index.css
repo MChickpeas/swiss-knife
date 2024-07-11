@@ -1,0 +1,45 @@
+.app {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  background: #f4f4f4;
+  padding: 10px;
+}
+
+main {
+  flex: 1;
+  padding: 10px;
+}
+
+.todo-list {
+  max-width: 600px;
+  margin: auto;
+}
+
+.todo-list input {
+  width: calc(100% - 60px);
+  padding: 10px;
+}
+
+.todo-list button {
+  padding: 10px;
+}
+
+.todo-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+}
+
+.journal, .timers, .calendar {
+  max-width: 600px;
+  margin: auto;
+}
