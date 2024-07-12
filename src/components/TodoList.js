@@ -1,6 +1,6 @@
 // src/components/TodoList.js
+
 import React, { useState, useEffect } from 'react';
-import { FaSearch } from 'react-icons/fa';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -16,7 +16,6 @@ const TodoList = () => {
   const [searchText, setSearchText] = useState('');
   const [filterPriority, setFilterPriority] = useState('All');
   const [filterCategory, setFilterCategory] = useState('All');
-  const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(() => {
     const savedTodos = JSON.parse(localStorage.getItem('todos'));
@@ -95,10 +94,6 @@ const TodoList = () => {
     );
   };
 
-  const toggleSearchBar = () => {
-    setSearchVisible(!searchVisible);
-  };
-
   return (
     <div className="todo-list">
       <h1>TODO</h1>
@@ -139,37 +134,32 @@ const TodoList = () => {
         </select>
         <button type="submit">Add</button>
       </form>
-      <button onClick={toggleSearchBar} className="search-toggle-button">
-        <FaSearch />
-      </button>
-      {searchVisible && (
-        <div className="filters">
-          <input 
-            type="text" 
-            value={searchText} 
-            onChange={(e) => setSearchText(e.target.value)} 
-            placeholder="Search todos"
-          />
-          <select 
-            value={filterPriority} 
-            onChange={(e) => setFilterPriority(e.target.value)}
-          >
-            <option value="All">All</option>
-            <option value="High">High</option>
-            <option value="Medium">Medium</option>
-            <option value="Low">Low</option>
-          </select>
-          <select 
-            value={filterCategory} 
-            onChange={(e) => setFilterCategory(e.target.value)}
-          >
-            <option value="All">All</option>
-            <option value="Work">Work</option>
-            <option value="Personal">Personal</option>
-            <option value="Shopping">Shopping</option>
-          </select>
-        </div>
-      )}
+      <div className="filters">
+        <input 
+          type="text" 
+          value={searchText} 
+          onChange={(e) => setSearchText(e.target.value)} 
+          placeholder="Search todos"
+        />
+        <select 
+          value={filterPriority} 
+          onChange={(e) => setFilterPriority(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <select 
+          value={filterCategory} 
+          onChange={(e) => setFilterCategory(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Shopping">Shopping</option>
+        </select>
+      </div>
       <ul>
         {filterTodos(todos).map((todo, index) => (
           <li key={index}>
@@ -188,10 +178,7 @@ const TodoList = () => {
                   style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
                   onClick={() => toggleTodo(index)}
                 >
-                  {todo.text}
-                  {todo.dueDate && ` - Due: ${todo.dueDate}`}
-                  {todo.priority && ` - Priority: ${todo.priority}`}
-                  {todo.category && ` - Category: ${todo.category}`}
+                  {todo.text} {todo.dueDate && `- Due: ${todo.dueDate}`} {todo.priority && `- Priority: ${todo.priority}`} {todo.category && `- Category: ${todo.category}`}
                 </span>
                 <div className="actions">
                   <button onClick={() => editTodo(index)}>Edit</button>

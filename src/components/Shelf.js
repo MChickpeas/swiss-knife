@@ -39,7 +39,7 @@ const styles = {
     height: '100vh',
     position: 'fixed',
     left: '0',
-    top: '0',
+    top: '5rem',
     transition: 'left 0.3s',
     boxShadow: '2px 0 5px rgba(0,0,0,0.1)',
   },
@@ -48,7 +48,7 @@ const styles = {
     top: '20px',  // Move the toggle button down a bit
     left: '20px', // Move the toggle button to the right
     marginBottom: '20px',
-    fontSize: '1.5rem',
+    fontSize: '1.75rem',
     cursor: 'pointer',
     background: 'none',
     border: 'none',
