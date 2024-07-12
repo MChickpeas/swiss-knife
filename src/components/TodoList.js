@@ -1,4 +1,6 @@
+// src/components/TodoList.js
 import React, { useState, useEffect } from 'react';
+import { FaSearch } from 'react-icons/fa';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -14,6 +16,7 @@ const TodoList = () => {
   const [searchText, setSearchText] = useState('');
   const [filterPriority, setFilterPriority] = useState('All');
   const [filterCategory, setFilterCategory] = useState('All');
+  const [searchVisible, setSearchVisible] = useState(false);
 
   useEffect(() => {
     const savedTodos = JSON.parse(localStorage.getItem('todos'));
@@ -92,10 +95,14 @@ const TodoList = () => {
     );
   };
 
+  const toggleSearchBar = () => {
+    setSearchVisible(!searchVisible);
+  };
+
   return (
-    <div className="todo-list" style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-      <h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>TODO</h1>
-      <form onSubmit={addTodo} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div className="todo-list">
+      <h1>TODO</h1>
+      <form onSubmit={addTodo} className="form">
         <input 
           type="text" 
           value={newTodo} 
@@ -132,57 +139,61 @@ const TodoList = () => {
         </select>
         <button type="submit">Add</button>
       </form>
-      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-        <input 
-          type="text" 
-          value={searchText} 
-          onChange={(e) => setSearchText(e.target.value)} 
-          placeholder="Search todos"
-          style={{ flex: 1 }}
-        />
-        <select 
-          value={filterPriority} 
-          onChange={(e) => setFilterPriority(e.target.value)}
-          style={{ flex: 1 }}
-        >
-          <option value="All">All</option>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
-        <select 
-          value={filterCategory} 
-          onChange={(e) => setFilterCategory(e.target.value)}
-          style={{ flex: 1 }}
-        >
-          <option value="All">All</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Shopping">Shopping</option>
-        </select>
-      </div>
-      <ul style={{ marginTop: '20px' }}>
+      <button onClick={toggleSearchBar} className="search-toggle-button">
+        <FaSearch />
+      </button>
+      {searchVisible && (
+        <div className="filters">
+          <input 
+            type="text" 
+            value={searchText} 
+            onChange={(e) => setSearchText(e.target.value)} 
+            placeholder="Search todos"
+          />
+          <select 
+            value={filterPriority} 
+            onChange={(e) => setFilterPriority(e.target.value)}
+          >
+            <option value="All">All</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          <select 
+            value={filterCategory} 
+            onChange={(e) => setFilterCategory(e.target.value)}
+          >
+            <option value="All">All</option>
+            <option value="Work">Work</option>
+            <option value="Personal">Personal</option>
+            <option value="Shopping">Shopping</option>
+          </select>
+        </div>
+      )}
+      <ul>
         {filterTodos(todos).map((todo, index) => (
-          <li key={index} style={{ marginBottom: '20px', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+          <li key={index}>
             {editingIndex === index ? (
-              <form onSubmit={updateTodo} style={{ display: 'flex', gap: '10px' }}>
+              <form onSubmit={updateTodo} className="form-inline">
                 <input 
                   type="text" 
                   value={editingValue} 
                   onChange={(e) => setEditingValue(e.target.value)} 
                   autoFocus
-                  style={{ flex: 1 }}
                 />
               </form>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div className="todo-item">
                 <span 
                   style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
                   onClick={() => toggleTodo(index)}
                 >
-                  {todo.text} - Due: {todo.dueDate} - Priority: {todo.priority} - Category: {todo.category}
+                  {todo.text}
+                  {todo.dueDate && ` - Due: ${todo.dueDate}`}
+                  {todo.priority && ` - Priority: ${todo.priority}`}
+                  {todo.category && ` - Category: ${todo.category}`}
                 </span>
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <div className="actions">
                   <button onClick={() => editTodo(index)}>Edit</button>
                   <button onClick={() => deleteTodo(index)}>Delete</button>
                   <button onClick={() => setAddingSubtaskIndex(index)}>Add Subtask</button>
@@ -190,22 +201,21 @@ const TodoList = () => {
               </div>
             )}
             {addingSubtaskIndex === index && (
-              <form onSubmit={(event) => addSubtask(event, index)} style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+              <form onSubmit={(event) => addSubtask(event, index)} className="form-inline">
                 <input 
                   type="text" 
                   value={newSubtask} 
                   onChange={(e) => setNewSubtask(e.target.value)} 
                   placeholder="New subtask"
-                  style={{ flex: 1 }}
                 />
                 <button type="submit">Add Subtask</button>
               </form>
             )}
-            <ul style={{ paddingLeft: '20px', marginTop: '10px' }}>
+            <ul className="subtasks">
               {todo.subtasks.map((subtask, subIndex) => (
-                <li key={subIndex} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <li key={subIndex} className="subtask-item">
                   <span 
-                    style={{ textDecoration: subtask.completed ? 'line-through' : 'none', cursor: 'pointer', flex: 1 }}
+                    style={{ textDecoration: subtask.completed ? 'line-through' : 'none', cursor: 'pointer' }}
                     onClick={() => toggleSubtask(index, subIndex)}
                   >
                     {subtask.text}

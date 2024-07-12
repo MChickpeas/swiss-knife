@@ -2,7 +2,7 @@
 body, html {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #121212;
   color: #ffffff;
   height: 100vh;
@@ -13,14 +13,14 @@ body, html {
 }
 
 .sidebar {
-  width: 200px;
+  width: 60px;
   background: #333333;
   padding: 10px;
 }
 
 main {
   flex: 1;
-  padding: 10px;
+  padding: 20px;
   transition: margin-left 0.3s;
   display: flex;
   justify-content: center;
@@ -33,15 +33,33 @@ main {
   width: 100%;
   background-color: #1e1e1e;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
-.todo-list input {
-  width: calc(100% - 60px);
+.todo-list h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.todo-list .form,
+.todo-list .filters,
+.todo-list .form-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-list input, 
+.todo-list select {
+  width: calc(100% - 20px);
   padding: 10px;
   background-color: #333333;
   border: 1px solid #444444;
   color: #ffffff;
+  border-radius: 5px;
 }
 
 .todo-list button {
@@ -50,6 +68,11 @@ main {
   border: none;
   color: #ffffff;
   cursor: pointer;
+  border-radius: 5px;
+}
+
+.todo-list button:hover {
+  background-color: #555555;
 }
 
 .todo-list ul {
@@ -59,9 +82,43 @@ main {
 
 .todo-list li {
   display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: #2a2a2a;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo-list .todo-item {
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 0;
+}
+
+.todo-list .todo-item span {
+  flex: 1;
+}
+
+.todo-list .actions {
+  display: flex;
+  gap: 10px;
+}
+
+.todo-list .subtasks {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.todo-list .subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.todo-list .form-inline {
+  display: flex;
+  gap: 10px;
 }
 
 .journal, .timers, .calendar {
@@ -69,7 +126,8 @@ main {
   width: 100%;
   background-color: #1e1e1e;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Shelf styles */
@@ -102,6 +160,18 @@ main {
   top: 20px;
   left: 20px;
   margin-bottom: 20px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: #ffffff;
+  z-index: 1000;
+}
+
+.search-toggle-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   font-size: 1.5rem;
   cursor: pointer;
   background: none;
