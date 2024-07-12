@@ -107,14 +107,9 @@ const TodoList = () => {
     );
   };
 
-  const calculateProgress = (subtasks) => {
-    const completedSubtasks = subtasks.filter(subtask => subtask.completed).length;
-    return subtasks.length === 0 ? 0 : (completedSubtasks / subtasks.length) * 100;
-  };
-
   return (
-    <div className="todo-list">
-      <form onSubmit={addTodo} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '300px' }}>
+    <div className="todo-list" style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <form onSubmit={addTodo} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <input 
           type="text" 
           value={newTodo} 
@@ -182,7 +177,7 @@ const TodoList = () => {
       </div>
       <ul style={{ marginTop: '20px' }}>
         {filterTodos(todos).map((todo, index) => (
-          <li key={index} style={{ marginBottom: '20px' }}>
+          <li key={index} style={{ marginBottom: '20px', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
             {editingIndex === index ? (
               <form onSubmit={updateTodo} style={{ display: 'flex', gap: '10px' }}>
                 <input 
@@ -194,20 +189,22 @@ const TodoList = () => {
                 />
               </form>
             ) : (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <span 
-                  style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer', flex: 1 }}
+                  style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
                   onClick={() => toggleTodo(index)}
                 >
                   {todo.text} - Due: {todo.dueDate} - Priority: {todo.priority} - Category: {todo.category}
                 </span>
-                <button onClick={() => editTodo(index)}>Edit</button>
-                <button onClick={() => deleteTodo(index)}>Delete</button>
-                <button onClick={() => setAddingSubtaskIndex(index)}>Add Subtask</button>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button onClick={() => editTodo(index)}>Edit</button>
+                  <button onClick={() => deleteTodo(index)}>Delete</button>
+                  <button onClick={() => setAddingSubtaskIndex(index)}>Add Subtask</button>
+                </div>
               </div>
             )}
             {addingSubtaskIndex === index && (
-              <form onSubmit={(event) => addSubtask(event, index)} style={{ display: 'flex', gap: '10px', marginTop: '10px', marginLeft: '20px' }}>
+              <form onSubmit={(event) => addSubtask(event, index)} style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                 <input 
                   type="text" 
                   value={newSubtask} 
@@ -231,14 +228,13 @@ const TodoList = () => {
                 </li>
               ))}
             </ul>
-            <div style={{ marginTop: '10px' }}>Progress: {calculateProgress(todo.subtasks).toFixed(0)}%</div>
           </li>
         ))}
       </ul>
       <h2 style={{ marginTop: '40px' }}>Completed Todos</h2>
       <ul>
         {completedTodos.map((todo, index) => (
-          <li key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <li key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
             <span 
               style={{ textDecoration: 'line-through', flex: 1 }}
             >

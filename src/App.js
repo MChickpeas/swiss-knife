@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import Sidebar from './components/Sidebar';
+import Shelf from './components/Shelf';
 import TodoList from './components/TodoList';
 import Journal from './components/Journal';
 import Timers from './components/Timers';
 import Calendar from './components/Calendar';
+import StartScreen from './components/StartScreen';
 
 const App = () => {
-  const [activeComponent, setActiveComponent] = useState('TodoList');
+  const [activeComponent, setActiveComponent] = useState('StartScreen');
+  const [shelfVisible, setShelfVisible] = useState(false);
+
+  const toggleShelf = () => {
+    setShelfVisible(!shelfVisible);
+  };
 
   const renderComponent = () => {
     switch (activeComponent) {
@@ -18,15 +24,18 @@ const App = () => {
         return <Timers />;
       case 'Calendar':
         return <Calendar />;
+      case 'StartScreen':
       default:
-        return <TodoList />;
+        return <StartScreen onSelect={setActiveComponent} />;
     }
   };
 
   return (
     <div className="app">
-      <Sidebar setActiveComponent={setActiveComponent} />
-      <main>{renderComponent()}</main>
+      <Shelf setActiveComponent={setActiveComponent} toggleShelf={toggleShelf} shelfVisible={shelfVisible} />
+      <main style={{ marginLeft: '60px' }}>
+        {renderComponent()}
+      </main>
     </div>
   );
 };
