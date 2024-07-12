@@ -1,6 +1,5 @@
-// src/components/TodoList.js
-
 import React, { useState, useEffect } from 'react';
+import { FaEdit, FaTrash, FaPlus, FaSearch } from 'react-icons/fa';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -9,6 +8,7 @@ const TodoList = () => {
   const [newPriority, setNewPriority] = useState('Low');
   const [newCategory, setNewCategory] = useState('');
   const [newRecurring, setNewRecurring] = useState('None');
+  const [newTimeframe, setNewTimeframe] = useState('');
   const [editingIndex, setEditingIndex] = useState(null);
   const [editingValue, setEditingValue] = useState('');
   const [addingSubtaskIndex, setAddingSubtaskIndex] = useState(null);
@@ -16,6 +16,8 @@ const TodoList = () => {
   const [searchText, setSearchText] = useState('');
   const [filterPriority, setFilterPriority] = useState('All');
   const [filterCategory, setFilterCategory] = useState('All');
+  const [showSearch, setShowSearch] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     const savedTodos = JSON.parse(localStorage.getItem('todos'));
@@ -29,12 +31,14 @@ const TodoList = () => {
   const addTodo = (event) => {
     event.preventDefault();
     if (newTodo.trim() !== '') {
-      setTodos([...todos, { text: newTodo, dueDate: newDueDate, priority: newPriority, category: newCategory, recurring: newRecurring, subtasks: [], completed: false }]);
+      setTodos([...todos, { text: newTodo, dueDate: newDueDate, priority: newPriority, category: newCategory, recurring: newRecurring, timeframe: newTimeframe, subtasks: [], completed: false }]);
       setNewTodo('');
       setNewDueDate('');
       setNewPriority('Low');
       setNewCategory('');
       setNewRecurring('None');
+      setNewTimeframe('');
+      setShowForm(false);
     }
   };
 
@@ -96,70 +100,86 @@ const TodoList = () => {
 
   return (
     <div className="todo-list">
-      <h1>TODO</h1>
-      <form onSubmit={addTodo} className="form">
-        <input 
-          type="text" 
-          value={newTodo} 
-          onChange={(e) => setNewTodo(e.target.value)} 
-          placeholder="Add a new todo"
-        />
-        <input 
-          type="date" 
-          value={newDueDate} 
-          onChange={(e) => setNewDueDate(e.target.value)} 
-        />
-        <select 
-          value={newPriority} 
-          onChange={(e) => setNewPriority(e.target.value)}
-        >
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
-        <input 
-          type="text" 
-          value={newCategory} 
-          onChange={(e) => setNewCategory(e.target.value)} 
-          placeholder="Category"
-        />
-        <select 
-          value={newRecurring} 
-          onChange={(e) => setNewRecurring(e.target.value)}
-        >
-          <option value="None">None</option>
-          <option value="Daily">Daily</option>
-          <option value="Weekly">Weekly</option>
-          <option value="Monthly">Monthly</option>
-        </select>
-        <button type="submit">Add</button>
-      </form>
-      <div className="filters">
-        <input 
-          type="text" 
-          value={searchText} 
-          onChange={(e) => setSearchText(e.target.value)} 
-          placeholder="Search todos"
-        />
-        <select 
-          value={filterPriority} 
-          onChange={(e) => setFilterPriority(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="High">High</option>
-          <option value="Medium">Medium</option>
-          <option value="Low">Low</option>
-        </select>
-        <select 
-          value={filterCategory} 
-          onChange={(e) => setFilterCategory(e.target.value)}
-        >
-          <option value="All">All</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Shopping">Shopping</option>
-        </select>
+      <div className="header">
+        <h1>TODO</h1>
+        <div className="icons">
+          <FaSearch className="icon" onClick={() => setShowSearch(!showSearch)} />
+          <FaPlus className="icon" onClick={() => setShowForm(!showForm)} />
+        </div>
       </div>
+      {showForm && (
+        <form onSubmit={addTodo} className="form">
+          <input 
+            type="text" 
+            value={newTodo} 
+            onChange={(e) => setNewTodo(e.target.value)} 
+            placeholder="Add a new todo"
+          />
+          <input 
+            type="date" 
+            value={newDueDate} 
+            onChange={(e) => setNewDueDate(e.target.value)} 
+          />
+          <select 
+            value={newPriority} 
+            onChange={(e) => setNewPriority(e.target.value)}
+          >
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          <input 
+            type="text" 
+            value={newCategory} 
+            onChange={(e) => setNewCategory(e.target.value)} 
+            placeholder="Category"
+          />
+          <select 
+            value={newRecurring} 
+            onChange={(e) => setNewRecurring(e.target.value)}
+          >
+            <option value="None">None</option>
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+          </select>
+          <input 
+            type="text" 
+            value={newTimeframe} 
+            onChange={(e) => setNewTimeframe(e.target.value)} 
+            placeholder="Timeframe"
+          />
+          <button type="submit">Add</button>
+        </form>
+      )}
+      {showSearch && (
+        <div className="filters">
+          <input 
+            type="text" 
+            value={searchText} 
+            onChange={(e) => setSearchText(e.target.value)} 
+            placeholder="Search todos"
+          />
+          <select 
+            value={filterPriority} 
+            onChange={(e) => setFilterPriority(e.target.value)}
+          >
+            <option value="All">All</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+          <select 
+            value={filterCategory} 
+            onChange={(e) => setFilterCategory(e.target.value)}
+          >
+            <option value="All">All</option>
+            <option value="Work">Work</option>
+            <option value="Personal">Personal</option>
+            <option value="Shopping">Shopping</option>
+          </select>
+        </div>
+      )}
       <ul>
         {filterTodos(todos).map((todo, index) => (
           <li key={index}>
@@ -174,16 +194,20 @@ const TodoList = () => {
               </form>
             ) : (
               <div className="todo-item">
-                <span 
-                  style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
-                  onClick={() => toggleTodo(index)}
-                >
-                  {todo.text} {todo.dueDate && `- Due: ${todo.dueDate}`} {todo.priority && `- Priority: ${todo.priority}`} {todo.category && `- Category: ${todo.category}`}
+                <span className="bullet" onClick={() => toggleTodo(index)}>
+                  {todo.completed ? '●' : '○'}
                 </span>
+                <div className="todo-text">
+                  <span>{todo.text}</span>
+                  {todo.dueDate && <span>Due: {todo.dueDate}</span>}
+                  {todo.priority && <span>Priority: {todo.priority}</span>}
+                  {todo.category && <span>Category: {todo.category}</span>}
+                  {todo.timeframe && <span>Timeframe: {todo.timeframe}</span>}
+                </div>
                 <div className="actions">
-                  <button onClick={() => editTodo(index)}>Edit</button>
-                  <button onClick={() => deleteTodo(index)}>Delete</button>
-                  <button onClick={() => setAddingSubtaskIndex(index)}>Add Subtask</button>
+                  <FaEdit className="icon" onClick={() => editTodo(index)} />
+                  <FaTrash className="icon" onClick={() => deleteTodo(index)} />
+                  <FaPlus className="icon" onClick={() => setAddingSubtaskIndex(index)} />
                 </div>
               </div>
             )}

@@ -1,5 +1,3 @@
-/* src/styles/index.css */
-
 body, html {
   margin: 0;
   padding: 0;
@@ -39,10 +37,21 @@ main {
   position: relative;
 }
 
+.todo-list .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .todo-list h1 {
   font-size: 2rem;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.todo-list .icons .icon {
+  cursor: pointer;
+  margin-left: 10px;
 }
 
 .todo-list .form,
@@ -61,7 +70,7 @@ main {
   border: 1px solid #444444;
   color: #ffffff;
   border-radius: 5px;
-  margin-bottom: 10px; /* Add this to ensure spacing between elements */
+  margin-bottom: 10px;
 }
 
 .todo-list button {
@@ -71,7 +80,7 @@ main {
   color: #ffffff;
   cursor: pointer;
   border-radius: 5px;
-  margin-bottom: 10px; /* Add this to ensure spacing */
+  margin-bottom: 10px;
 }
 
 .todo-list button:hover {
@@ -99,13 +108,26 @@ main {
   align-items: center;
 }
 
-.todo-list .todo-item span {
+.todo-list .todo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   flex: 1;
+  padding-left: 10px;
 }
 
-.todo-list .actions {
-  display: flex;
-  gap: 10px;
+.todo-list .todo-text span {
+  word-break: break-word;
+}
+
+.todo-list .bullet {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.todo-list .actions .icon {
+  cursor: pointer;
+  margin-left: 10px;
 }
 
 .todo-list .subtasks {
@@ -122,16 +144,6 @@ main {
 .todo-list .form-inline {
   display: flex;
   gap: 10px;
-}
-
-.todo-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0;
-  background-color: #1e1e1e;
-  margin: 5px 0;
-  border-radius: 5px;
 }
 
 .journal, .timers, .calendar {
