@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
-  const [completedTodos, setCompletedTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
   const [newDueDate, setNewDueDate] = useState('');
   const [newPriority, setNewPriority] = useState('Low');
@@ -18,15 +17,12 @@ const TodoList = () => {
 
   useEffect(() => {
     const savedTodos = JSON.parse(localStorage.getItem('todos'));
-    const savedCompletedTodos = JSON.parse(localStorage.getItem('completedTodos'));
     if (savedTodos) setTodos(savedTodos);
-    if (savedCompletedTodos) setCompletedTodos(savedCompletedTodos);
   }, []);
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
-    localStorage.setItem('completedTodos', JSON.stringify(completedTodos));
-  }, [todos, completedTodos]);
+  }, [todos]);
 
   const addTodo = (event) => {
     event.preventDefault();
@@ -54,10 +50,6 @@ const TodoList = () => {
   const toggleTodo = index => {
     const newTodos = [...todos];
     newTodos[index].completed = !newTodos[index].completed;
-    if (newTodos[index].completed) {
-      setCompletedTodos([...completedTodos, newTodos[index]]);
-      newTodos.splice(index, 1);
-    }
     setTodos(newTodos);
   };
 
@@ -92,13 +84,6 @@ const TodoList = () => {
     setEditingValue('');
   };
 
-  const restoreTodo = (index) => {
-    const restoredTodo = completedTodos.splice(index, 1)[0];
-    restoredTodo.completed = false;
-    setTodos([...todos, restoredTodo]);
-    setCompletedTodos([...completedTodos]);
-  };
-
   const filterTodos = (todos) => {
     return todos.filter(todo => 
       (filterPriority === 'All' || todo.priority === filterPriority) &&
@@ -109,6 +94,7 @@ const TodoList = () => {
 
   return (
     <div className="todo-list" style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <h1 style={{ textAlign: 'center', fontWeight: 'bold' }}>TODO</h1>
       <form onSubmit={addTodo} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <input 
           type="text" 
@@ -228,19 +214,6 @@ const TodoList = () => {
                 </li>
               ))}
             </ul>
-          </li>
-        ))}
-      </ul>
-      <h2 style={{ marginTop: '40px' }}>Completed Todos</h2>
-      <ul>
-        {completedTodos.map((todo, index) => (
-          <li key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px', border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
-            <span 
-              style={{ textDecoration: 'line-through', flex: 1 }}
-            >
-              {todo.text} - Due: {todo.dueDate} - Priority: {todo.priority} - Category: {todo.category}
-            </span>
-            <button onClick={() => restoreTodo(index)}>Restore</button>
           </li>
         ))}
       </ul>

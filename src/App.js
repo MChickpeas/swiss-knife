@@ -33,7 +33,7 @@ const App = () => {
   return (
     <div className="app">
       <Shelf setActiveComponent={setActiveComponent} toggleShelf={toggleShelf} shelfVisible={shelfVisible} />
-      <main style={{ marginLeft: '60px' }}>
+      <main style={{ marginLeft: shelfVisible ? '60px' : '0', transition: 'margin-left 0.3s', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         {renderComponent()}
       </main>
     </div>
