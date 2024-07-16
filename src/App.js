@@ -8,9 +8,9 @@ import Timers from './components/Timers';
 import Calendar from './components/Calendar';
 import MoneyConverter from './components/MoneyConverter';
 import FileExtensionConverter from './components/FileExtensionConverter';
-import Calculator from './components/Calculator';
 import YouTubeToMp3Converter from './components/YouTubeToMp3Converter';
 import StartScreen from './components/StartScreen';
+import DesmosCalculator from './components/DesmosCalculator';
 
 const App = () => {
   const [activeComponent, setActiveComponent] = useState('StartScreen');
@@ -33,7 +33,7 @@ const App = () => {
       case 'FileExtensionConverter':
         return <FileExtensionConverter />;
       case 'Calculator':
-        return <Calculator />;
+        return <DesmosCalculator />;
       case 'YouTubeToMp3Converter':
         return <YouTubeToMp3Converter />;
       case 'StartScreen':
