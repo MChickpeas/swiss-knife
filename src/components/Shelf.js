@@ -1,6 +1,5 @@
-// src/components/Shelf.js
 import React from 'react';
-import { FaList, FaBook, FaClock, FaCalendarAlt, FaBars } from 'react-icons/fa';
+import { FaList, FaBook, FaClock, FaCalendarAlt, FaBars, FaMoneyBill, FaFile, FaCalculator, FaMusic } from 'react-icons/fa';
 
 const Shelf = ({ setActiveComponent, toggleShelf, shelfVisible }) => {
   return (
@@ -21,6 +20,18 @@ const Shelf = ({ setActiveComponent, toggleShelf, shelfVisible }) => {
           </button>
           <button onClick={() => setActiveComponent('Calendar')} style={styles.iconButton}>
             <FaCalendarAlt />
+          </button>
+          <button onClick={() => setActiveComponent('MoneyConverter')} style={styles.iconButton}>
+            <FaMoneyBill />
+          </button>
+          <button onClick={() => setActiveComponent('FileExtensionConverter')} style={styles.iconButton}>
+            <FaFile />
+          </button>
+          <button onClick={() => setActiveComponent('Calculator')} style={styles.iconButton}>
+            <FaCalculator />
+          </button>
+          <button onClick={() => setActiveComponent('YouTubeToMp3Converter')} style={styles.iconButton}>
+            <FaMusic />
           </button>
         </>
       )}
@@ -45,8 +56,8 @@ const styles = {
   },
   toggleButton: {
     position: 'fixed',
-    top: '20px',  // Move the toggle button down a bit
-    left: '20px', // Move the toggle button to the right
+    top: '20px',
+    left: '20px',
     marginBottom: '20px',
     fontSize: '1.75rem',
     cursor: 'pointer',
@@ -56,7 +67,7 @@ const styles = {
     zIndex: '1000',
   },
   iconButton: {
-    margin: '30px 0', // Increase the margin to move icons further down
+    margin: '30px 0',
     fontSize: '1.5rem',
     cursor: 'pointer',
     background: 'none',
