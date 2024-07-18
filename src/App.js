@@ -56,7 +56,7 @@ const JournalAuth = ({ setJournalAuthenticated }) => {
   const [password, setPassword] = useState('');
 
   const handlePasswordSubmit = () => {
-    if (password === 'your_password_here') {
+    if (password === 'Password') {
       setJournalAuthenticated(true);
     } else {
       alert('Incorrect password');

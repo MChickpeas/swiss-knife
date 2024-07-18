@@ -1,0 +1,93 @@
+/* src/styles/Timers.css */
+
+.timers {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .timers h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .new-timer-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .new-timer-form input,
+  .new-timer-form select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #333;
+    color: #fff;
+  }
+  
+  .new-timer-form button {
+    padding: 10px 20px;
+    background-color: #444;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .new-timer-form button:hover {
+    background-color: #555;
+  }
+  
+  .timers-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .timer-item {
+    padding: 10px;
+    background-color: #2a2a2a;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .timer-label {
+    flex: 1;
+    color: #fff;
+  }
+  
+  .timer-time {
+    flex: 1;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .timer-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .timer-controls button {
+    padding: 5px 10px;
+    background-color: #444;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .timer-controls button:hover {
+    background-color: #555;
+  }
+  
